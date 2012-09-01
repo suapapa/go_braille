@@ -66,3 +66,57 @@ func Code(dots []uint) (r rune) {
 	}
 	return
 }
+
+var MarkerNumber = Code([]uint{3, 4, 5, 6})
+var MarkerCap = Code([]uint{6})
+
+var number = map[int]rune{
+	1: Code([]uint{1}),
+	2: Code([]uint{1, 2}),
+	3: Code([]uint{1, 4}),
+	4: Code([]uint{1, 4, 5}),
+	5: Code([]uint{1, 5}),
+	6: Code([]uint{1, 2, 4}),
+	7: Code([]uint{1, 2, 4, 5}),
+	8: Code([]uint{1, 2, 5}),
+	9: Code([]uint{2, 4}),
+	0: Code([]uint{2, 4, 5}),
+}
+
+// Return braille code for given number and English alphabet
+func Alphabet(c rune) (a rune) {
+	switch {
+	case '0' <= c && c <= '9':
+		i := int(c - '0')
+		a = number[i]
+		return
+
+	case ('a' <= c && c <= 'v') || ('x' <= c && c <= 'z'):
+		i := int(c - 'a')
+		if 'a' <= c && c <= 'v' {
+			i += 1
+		}
+
+		a = number[i%10]
+		switch i / 10 {
+		case 1:
+			a |= Code([]uint{3})
+		case 2:
+			a |= Code([]uint{3, 6})
+		}
+		return
+
+	case c == 'w':
+		a = number[0] | Code([]uint{6})
+		return
+
+	case c == ' ':
+		a = 0x2800
+		return
+	}
+
+	//log.Printf("Braille for %c not present... yet\n", c)
+	a = 0x2800
+
+	return
+}

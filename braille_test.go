@@ -24,6 +24,35 @@ func TestDot(t *testing.T) {
 }
 
 func TestCode(t *testing.T) {
-	fmt.Printf("1,5,6,7 -> %c\n", Code([]uint{1, 5, 6, 7}))
-	fmt.Printf("1,2,3,4,5,6,7,8 -> %c\n", Code([]uint{1, 2, 3, 4, 5, 6, 7, 8}))
+	fmt.Printf("1-5-6-7 -> %c\n", Code([]uint{1, 5, 6, 7}))
+	fmt.Printf("1-2-3-4-5-6-7-8 -> %c\n", Code([]uint{1, 2, 3, 4, 5, 6, 7, 8}))
+}
+
+func TestNumber(t *testing.T) {
+	for _, c := range "1234567890" {
+		fmt.Printf("%c : %c\n", c, Alphabet(c))
+	}
+}
+
+func TestAlphabet(t *testing.T) {
+	s := "HackTime for Google Hackfair 2012-09-01"
+	fmt.Printf("%s\n", s)
+	var lastC rune
+	for _, c := range s {
+		if ('0' <= c && c <= '9') && ('a' <= lastC && lastC <= 'z') {
+			fmt.Printf("\n%c ", MarkerNumber)
+
+		}
+		if 'A' <= c && c <= 'Z' {
+			fmt.Printf("%c", MarkerCap)
+			c += 0x20
+		}
+		fmt.Printf("%c", Alphabet(c))
+
+		if c != ' ' && c != '-' {
+			lastC = c
+		}
+	}
+	fmt.Printf("\n")
+
 }
