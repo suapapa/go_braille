@@ -38,7 +38,7 @@ import (
 )
 
 // Convert a unicode braille character to dot representation.
-func Dot(bc rune) *[]uint32 {
+func Dot(bc rune) []uint32 {
 	if (bc & 0xff00) != 0x2800 {
 		//log.Errorf("0x%x is not braille code~\n", bc)
 		fmt.Printf("0x%x is not braille code~\n", bc)
@@ -51,13 +51,13 @@ func Dot(bc rune) *[]uint32 {
 			dots = append(dots, i+1)
 		}
 	}
-	return &dots
+	return dots
 }
 
 // Convert dot representation to a unicode character.
-func Code(dots *[]uint32) (r rune) {
+func Code(dots []uint32) (r rune) {
 	r = 0x2800
-	for _, d := range *dots {
+	for _, d := range dots {
 		if 1 > d || d > 8 {
 			fmt.Printf("Dot index must in range 1 to 8. Not %d\n", d)
 			return 0x00
