@@ -1,11 +1,10 @@
 
 [install go]: http://golang.org/install.html "Install Go"
-[the godoc url]: http://localhost:6060/pkg/github.com/suapapa/braille/ "the Godoc URL"
 
 About braille
 =============
 
-braille is the best program for...
+braille is a tool for unicode braille code (0x2800~0x28FF).
 
 Documentation
 =============
@@ -27,11 +26,7 @@ Use `go doc` to vew the documentation for braille
 
     go doc github.com/suapapa/braille
 
-Or alternatively, use a godoc http server
-
-    godoc -http=:6060
-
-and visit [the Godoc URL][]
+Or alternatively, refer [go.pkgdoc.org](http://go.pkgdoc.org/github.com/suapapa/go_braille)
 
 
 Author

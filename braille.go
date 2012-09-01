@@ -8,14 +8,37 @@
  *  Description: Main source file in braille
  */
 
-// Package braille does ....
+/*
+  Package braille is a tool for unicode braille code.
+
+  A braille character has 8 dots. 2 dots width and 4 dots height.
+  Each dot called in following index.
+
+    14
+    25
+    36
+    78
+
+  For example, A braille character which has dot 1, 5, 6, 7
+  look like;
+
+    ^_
+    _^
+    _^
+    ^_
+
+  This package provide functions for convert such a
+  dot representation to unicode and vice versa
+
+*/
 package braille
 
 import (
 	"fmt"
 )
 
-func Dots(bc rune) *[]uint32 {
+// Convert a unicode braille character to dot representation.
+func Dot(bc rune) *[]uint32 {
 	if (bc & 0xff00) != 0x2800 {
 		//log.Errorf("0x%x is not braille code~\n", bc)
 		fmt.Printf("0x%x is not braille code~\n", bc)
@@ -31,6 +54,7 @@ func Dots(bc rune) *[]uint32 {
 	return &dots
 }
 
+// Convert dot representation to a unicode character.
 func Code(dots *[]uint32) (r rune) {
 	r = 0x2800
 	for _, d := range *dots {
