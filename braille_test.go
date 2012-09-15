@@ -36,23 +36,6 @@ func TestNumber(t *testing.T) {
 
 func TestAlphabet(t *testing.T) {
 	s := "HackTime for Google Hackfair 2012-09-01"
-	fmt.Printf("%s\n", s)
-	var lastC rune
-	for _, c := range s {
-		if ('0' <= c && c <= '9') && ('a' <= lastC && lastC <= 'z') {
-			fmt.Printf("\n%c ", MarkerNumber)
-
-		}
-		if 'A' <= c && c <= 'Z' {
-			fmt.Printf("%c", MarkerCap)
-			c += 0x20
-		}
-		fmt.Printf("%c", Alphabet(c))
-
-		if c != ' ' && c != '-' {
-			lastC = c
-		}
-	}
-	fmt.Printf("\n")
-
+	fmt.Println(s)
+	fmt.Println(Encode(s))
 }

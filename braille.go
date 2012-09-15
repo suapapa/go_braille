@@ -120,3 +120,27 @@ func Alphabet(c rune) (a rune) {
 
 	return
 }
+
+// Encode input alpha-numeric string to braille string
+func Encode(s string) string{
+	rs := make([]rune, len(s))
+
+	var lastC rune
+	for _, c := range s {
+		if ('0' <= c && c <= '9') && ('a' <= lastC && lastC <= 'z') {
+			rs = append(rs, 0x20, MarkerNumber)
+		}
+		if 'A' <= c && c <= 'Z' {
+			rs = append(rs, 0x20, MarkerCap)
+			c += 0x20
+		}
+		rs = append(rs, Alphabet(c))
+
+		if c != ' ' && c != '-' {
+			lastC = c
+		}
+	}
+
+	return string(rs)
+}
+
