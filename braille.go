@@ -38,16 +38,16 @@ import (
 )
 
 // Convert a unicode braille character to dot representation.
-func Dot(bc rune) []uint {
-	if (bc & 0xff00) != 0x2800 {
-		//log.Errorf("0x%x is not braille code~\n", bc)
-		fmt.Printf("0x%x is not braille code~\n", bc)
+func Dot(r rune) []uint {
+	if (r & 0xff00) != 0x2800 {
+		//log.Errorf("0x%x is not braille code~\n", r)
+		fmt.Printf("0x%x is not braille code~\n", r)
 		return nil
 	}
 	dots := make([]uint, 0)
 	var i uint
 	for i = 0; i < 8; i++ {
-		if ((bc >> i) & 1) == 1 {
+		if ((r >> i) & 1) == 1 {
 			dots = append(dots, i+1)
 		}
 	}
@@ -55,7 +55,7 @@ func Dot(bc rune) []uint {
 }
 
 // Convert dot representation to a unicode character.
-func Code(dots []uint) (r rune) {
+func Rune(dots ...uint) (r rune) {
 	r = 0x2800
 	for _, d := range dots {
 		if 1 > d || d > 8 {
@@ -67,20 +67,20 @@ func Code(dots []uint) (r rune) {
 	return
 }
 
-var MarkerNumber = Code([]uint{3, 4, 5, 6})
-var MarkerCap = Code([]uint{6})
+var MarkerNumber = Rune(3, 4, 5, 6)
+var MarkerCap = Rune(6)
 
 var number = map[int]rune{
-	1: Code([]uint{1}),
-	2: Code([]uint{1, 2}),
-	3: Code([]uint{1, 4}),
-	4: Code([]uint{1, 4, 5}),
-	5: Code([]uint{1, 5}),
-	6: Code([]uint{1, 2, 4}),
-	7: Code([]uint{1, 2, 4, 5}),
-	8: Code([]uint{1, 2, 5}),
-	9: Code([]uint{2, 4}),
-	0: Code([]uint{2, 4, 5}),
+	1: Rune(1),
+	2: Rune(1, 2),
+	3: Rune(1, 4),
+	4: Rune(1, 4, 5),
+	5: Rune(1, 5),
+	6: Rune(1, 2, 4),
+	7: Rune(1, 2, 4, 5),
+	8: Rune(1, 2, 5),
+	9: Rune(2, 4),
+	0: Rune(2, 4, 5),
 }
 
 // Return braille code for given number and English alphabet
@@ -100,14 +100,14 @@ func Alphabet(c rune) (a rune) {
 		a = number[i%10]
 		switch i / 10 {
 		case 1:
-			a |= Code([]uint{3})
+			a |= Rune(3)
 		case 2:
-			a |= Code([]uint{3, 6})
+			a |= Rune(3, 6)
 		}
 		return
 
 	case c == 'w':
-		a = number[0] | Code([]uint{6})
+		a = number[0] | Rune(6)
 		return
 
 	case c == ' ':

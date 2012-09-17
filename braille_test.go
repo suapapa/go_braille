@@ -24,8 +24,8 @@ func TestDot(t *testing.T) {
 }
 
 func TestCode(t *testing.T) {
-	fmt.Printf("1-5-6-7 -> %c\n", Code([]uint{1, 5, 6, 7}))
-	fmt.Printf("1-2-3-4-5-6-7-8 -> %c\n", Code([]uint{1, 2, 3, 4, 5, 6, 7, 8}))
+	fmt.Printf("1-5-6-7 -> %c\n", Rune(1, 5, 6, 7))
+	fmt.Printf("1-2-3-4-5-6-7-8 -> %c\n", Rune(1, 2, 3, 4, 5, 6, 7, 8))
 }
 
 func TestNumber(t *testing.T) {
