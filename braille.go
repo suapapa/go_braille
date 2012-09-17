@@ -35,11 +35,14 @@ package braille
 
 import (
 	"fmt"
+	"log"
 )
+
+var BrailleCodeBase = rune(0x2800)
 
 // Convert a unicode braille character to dot representation.
 func Dot(r rune) []uint {
-	if (r & 0xff00) != 0x2800 {
+	if (r & 0xff00) != BrailleCodeBase {
 		//log.Errorf("0x%x is not braille code~\n", r)
 		fmt.Printf("0x%x is not braille code~\n", r)
 		return nil
@@ -56,7 +59,7 @@ func Dot(r rune) []uint {
 
 // Convert dot representation to a unicode character.
 func Rune(dots ...uint) (r rune) {
-	r = 0x2800
+	r = BrailleCodeBase
 	for _, d := range dots {
 		if 1 > d || d > 8 {
 			fmt.Printf("Dot index must in range 1 to 8. Not %d\n", d)
@@ -84,12 +87,18 @@ var number = map[int]rune{
 }
 
 // Return braille code for given number and English alphabet
-func Alphabet(c rune) (a rune) {
+func Alphabet(c rune) (rs []rune) {
+	if 'A' <= c && c <= 'Z' {
+		rs = append(rs, MarkerCap)
+		c ^= 0x20
+	}
+
+	var a rune
+
 	switch {
 	case '0' <= c && c <= '9':
 		i := int(c - '0')
 		a = number[i]
-		return
 
 	case ('a' <= c && c <= 'v') || ('x' <= c && c <= 'z'):
 		i := int(c - 'a')
@@ -104,25 +113,25 @@ func Alphabet(c rune) (a rune) {
 		case 2:
 			a |= Rune(3, 6)
 		}
-		return
 
 	case c == 'w':
 		a = number[0] | Rune(6)
-		return
 
 	case c == ' ':
-		a = 0x2800
-		return
+		a = BrailleCodeBase
+
+	default:
+		log.Printf("Braille for %c not present... yet\n", c)
+		a = BrailleCodeBase
 	}
 
-	//log.Printf("Braille for %c not present... yet\n", c)
-	a = 0x2800
+	rs = append(rs, a)
 
 	return
 }
 
 // Encode input alpha-numeric string to braille string
-func Encode(s string) string{
+func Encode(s string) string {
 	rs := make([]rune, len(s))
 
 	var lastC rune
@@ -130,17 +139,12 @@ func Encode(s string) string{
 		if ('0' <= c && c <= '9') && ('a' <= lastC && lastC <= 'z') {
 			rs = append(rs, 0x20, MarkerNumber)
 		}
-		if 'A' <= c && c <= 'Z' {
-			rs = append(rs, 0x20, MarkerCap)
-			c += 0x20
-		}
-		rs = append(rs, Alphabet(c))
+		rs = append(rs, Alphabet(c)...)
 
 		if c != ' ' && c != '-' {
-			lastC = c
+			lastC = c | 0x20
 		}
 	}
 
 	return string(rs)
 }
-
