@@ -131,8 +131,8 @@ func Alphabet(c rune) (rs []rune) {
 }
 
 // Encode input alpha-numeric string to braille string
-func Encode(s string) string {
-	rs := make([]rune, len(s))
+func Encode(s string) (string, int) {
+	rs := make([]rune, 0)
 
 	var lastC rune
 	for _, c := range s {
@@ -146,5 +146,5 @@ func Encode(s string) string {
 		}
 	}
 
-	return string(rs)
+	return string(rs), len(rs)
 }

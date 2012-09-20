@@ -217,8 +217,8 @@ var abbr = map[rune][]rune{
 
 // TODO: 약자, 약어 처리를 위해서는 형태소 분석 필요! 일단 다 풀어 씀. :P
 
-func Encode(s string) string {
-	rs := make([]rune, len(s)+len(s)/2)
+func Encode(s string) (string, int) {
+	rs := make([]rune, 0)
 	for _, c := range s {
 		switch {
 		case han.IsJaeum(c) || han.IsMoeum(c):
@@ -236,5 +236,5 @@ func Encode(s string) string {
 
 	}
 
-	return string(rs)
+	return string(rs), len(rs)
 }
