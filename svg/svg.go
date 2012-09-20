@@ -11,7 +11,7 @@ import (
 )
 
 func drawDot(c *svg.SVG, x, y, s int) {
-	c.Rect(x, y, s, s, "fill:none; stroke:yellow")
+	//c.Rect(x, y, s, s, "fill:none; stroke:yellow")
 	c.Circle(x+s/2, y+s/2, s/3)
 }
 
@@ -23,8 +23,7 @@ func Draw(c *svg.SVG, r rune, x, y, s int) {
 		return
 	}
 
-	c.Rect(x, y, 2*s, 4*s, "fill:none; stroke:red")
-	log.Println(brl.Dot(r))
+	//c.Rect(x, y, 2*s, 4*s, "fill:none; stroke:red")
 
 	for _, di := range brl.Dot(r) {
 		switch di {
