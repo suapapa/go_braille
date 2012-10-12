@@ -177,6 +177,11 @@ var symbol = map[rune][]rune{
 	// TODO: 빠진 문장 부호 있음.
 }
 
+func isSupportedSymbol(c rune) bool {
+	_, ok := symbol[c]
+	return ok
+}
+
 /*
 약자 :
 주 쓰이는 글자나 단어에는 별도의 기호가 배당되어 있다.
@@ -218,19 +223,50 @@ var abbr = map[rune][]rune{
 // TODO: 약자, 약어 처리를 위해서는 형태소 분석 필요! 일단 다 풀어 씀. :P
 
 func Encode(s string) (string, int) {
+	var currentMarker rune
+
 	rs := make([]rune, 0)
 	for _, c := range s {
 		switch {
 		case han.IsJaeum(c) || han.IsMoeum(c):
-			rs = append(rs, markerJamo)
+			if currentMarker != markerJamo {
+				rs = append(rs, markerJamo)
+				currentMarker = markerJamo
+			}
 			rs = append(rs, Jamo(c)...)
 		case han.IsHangul(c):
+			// In Korean braille string there is no marker for
+			// Korean string.
+			if currentMarker != 0x00 {
+				currentMarker = 0x00
+			}
 			i, m, f := han.Split(c)
 			rs = append(rs, Jamo(i)...)
 			rs = append(rs, Jamo(m)...)
 			rs = append(rs, Jamo(f)...)
+		case '0' <= c && c <= '9':
+			if currentMarker != markerNumber {
+				rs = append(rs, markerNumber)
+				currentMarker = markerNumber
+			}
+			rs = append(rs, brl.Alphabet(c)...)
+		case ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'):
+			if currentMarker != markerForeign {
+				rs = append(rs, markerForeign)
+				currentMarker = markerForeign
+			}
+			rs = append(rs, brl.Alphabet(c)...)
+		case isSupportedSymbol(c):
+			// No marker change in symbols... Is it right?
+			rs = append(rs, symbol[c]...)
+		case c == 0x20:
+			rs = append(rs, brl.Rune())
+			currentMarker = 0x00
+		case c == 0x0a:
+			rs = append(rs, c)
+			currentMarker = 0x00
 		default:
-			log.Printf("Braille for %c not present... yet", c)
+			log.Printf("Braille for %c(0x%x) not present... yet", c, c)
 			rs = append(rs, brl.BrailleCodeBase)
 		}
 
