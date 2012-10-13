@@ -222,9 +222,20 @@ var abbr = map[rune][]rune{
 
 // TODO: 약자, 약어 처리를 위해서는 형태소 분석 필요! 일단 다 풀어 씀. :P
 
-func Encode(s string) (string, int) {
-	var currentMarker rune
+func hasHangul(s string) bool {
+	for _, c := range s {
+		if han.IsHangul(c) {
+			return true
+		}
+	}
+	log.Printf("%s not has hangul\n", s)
+	return false
+}
 
+func Encode(s string) (string, int) {
+	needForeignMarker := hasHangul(s)
+
+	var currentMarker rune
 	rs := make([]rune, 0)
 	for _, c := range s {
 		switch {
@@ -252,7 +263,9 @@ func Encode(s string) (string, int) {
 			rs = append(rs, brl.Alphabet(c)...)
 		case ('a' <= c && c <= 'z') || ('A' <= c && c <= 'Z'):
 			if currentMarker != markerForeign {
-				rs = append(rs, markerForeign)
+				if needForeignMarker {
+					rs = append(rs, markerForeign)
+				}
 				currentMarker = markerForeign
 			}
 			rs = append(rs, brl.Alphabet(c)...)

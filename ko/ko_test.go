@@ -16,14 +16,20 @@ import (
 	"unicode/utf8"
 )
 
+func TestEng(t *testing.T) {
+	s := "Style"
+	fmt.Println(s)
+	fmt.Println(Encode(s))
+}
+
 func TestHangul(t *testing.T) {
-	s := "오빤 강남 스타일"
+	s := "오빤 강남 Style"
 	fmt.Println(s)
 	fmt.Println(Encode(s))
 }
 
 func TestHangulMultiline(t *testing.T) {
-	s := "낮에는 따사로운 인간적인 여자\n밤이오면 심장이 뜨거워 지는 여자"
+	s := "낮에는 따사로운 인간적인 여자\n밤이오면 심장이 뜨거워 지는 여자!"
 	fmt.Println(s)
 	bs, bsLen := Encode(s)
 	rLen := utf8.RuneCountInString(bs)
