@@ -119,7 +119,7 @@ func DrawPage30(s *svg.SVG, bs string) *BrailleCanvas {
 	c.pageMarginLeft = 10
 	c.pageMarginRight = 10
 	c.gapCell = 3
-	c.gapLine = 6
+	c.gapLine = 16
 	c.lineCellsCnt = 30
 
 	c.canvasW = c.pageMarginLeft + c.pageMarginRight
