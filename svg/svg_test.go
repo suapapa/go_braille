@@ -13,8 +13,7 @@ import (
 )
 
 func TestDraw(t *testing.T) {
-
-	f, err := os.Create("test.svg")
+	f, err := os.Create("test_label.svg")
 	if err != nil {
 		t.Errorf("failed to create test.svg : %s\n", err)
 	}
@@ -23,25 +22,35 @@ func TestDraw(t *testing.T) {
 	canvas := svg.New(f)
 	defer canvas.End()
 
-	dot := 10
-	margin := 3
-
 	s := "Braille Printer"
-	bs, bsc := brl.Encode(s)
-	fmt.Println(bs)
+	bs, _ := brl.Encode(s)
+	DrawLabel(canvas, bs)
+}
 
-	cw := bsc*(dot*2) + (bsc+1)*margin
-	ch := margin*2 + dot*4
-
-	canvas.Start(cw, ch)
-
-	x := margin
-	for _, c := range bs {
-		if c & 0x2800 != 0x2800 {
-			continue
-		}
-		Draw(canvas, c, x, margin, dot)
-		x += dot * 2
-		x += margin
+func TestCalcCanvasSize_30x27(t *testing.T) {
+	f, err := os.Create("test_page.svg")
+	if err != nil {
+		t.Errorf("failed to create test.svg : %s\n", err)
 	}
+	defer f.Close()
+
+	canvas := svg.New(f)
+	defer canvas.End()
+
+	br := make([]rune, 100, 0x28FF)
+	for i := 0; i < 100; i++ {
+		switch {
+		case i%5 == 0:
+			br[i] = 0x2800
+		case i%37 == 0:
+			br[i] = 0xa
+		default:
+			br[i] = brl.Rune(1,2,3,4,5,6)
+		}
+	}
+	bs := string(br)
+	fmt.Println(bs)
+	calcLines(bs, 30)
+
+	DrawPage30(canvas, bs)
 }
