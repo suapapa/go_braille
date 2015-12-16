@@ -17,14 +17,14 @@ Prerequisites
 Installation
 -------------
 
-    go get github.com/suapapa/braille
+    go get github.com/suapapa/go_braille
 
 General Documentation
 ---------------------
 
 Use `go doc` to vew the documentation for braille
 
-    go doc github.com/suapapa/braille
+    go doc github.com/suapapa/go_braille
 
 Or alternatively, refer [go.pkgdoc.org](http://go.pkgdoc.org/github.com/suapapa/go_braille)
 
