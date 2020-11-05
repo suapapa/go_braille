@@ -11,9 +11,10 @@
 package ko
 
 import (
+	"log"
+
 	brl "github.com/suapapa/go_braille"
 	han "github.com/suapapa/go_hangul"
-	"log"
 )
 
 /*
@@ -25,61 +26,61 @@ import (
 */
 var jamo = map[rune][]rune{
 	// 초성
-	han.LEAD_G: []rune{brl.Rune(4)},
-	han.LEAD_N: []rune{brl.Rune(1, 4)},
-	han.LEAD_D: []rune{brl.Rune(2, 4)},
-	han.LEAD_R: []rune{brl.Rune(5)},
-	han.LEAD_M: []rune{brl.Rune(1, 5)},
-	han.LEAD_B: []rune{brl.Rune(4, 5)},
-	han.LEAD_S: []rune{brl.Rune(6)},
-	han.LEAD_J: []rune{brl.Rune(4, 6)},
-	han.LEAD_C: []rune{brl.Rune(5, 6)},
-	han.LEAD_K: []rune{brl.Rune(1, 2, 4)},
-	han.LEAD_T: []rune{brl.Rune(1, 2, 5)},
-	han.LEAD_P: []rune{brl.Rune(1, 4, 5)},
-	han.LEAD_H: []rune{brl.Rune(2, 4, 5)},
+	han.LeadG: {brl.Rune(4)},
+	han.LeadN: {brl.Rune(1, 4)},
+	han.LeadD: {brl.Rune(2, 4)},
+	han.LeadR: {brl.Rune(5)},
+	han.LeadM: {brl.Rune(1, 5)},
+	han.LeadB: {brl.Rune(4, 5)},
+	han.LeadS: {brl.Rune(6)},
+	han.LeadJ: {brl.Rune(4, 6)},
+	han.LeadC: {brl.Rune(5, 6)},
+	han.LeadK: {brl.Rune(1, 2, 4)},
+	han.LeadT: {brl.Rune(1, 2, 5)},
+	han.LeadP: {brl.Rune(1, 4, 5)},
+	han.LeadH: {brl.Rune(2, 4, 5)},
 
 	// 종성
-	han.TAIL_G:  []rune{brl.Rune(1)},
-	han.TAIL_N:  []rune{brl.Rune(2, 4)},
-	han.TAIL_D:  []rune{brl.Rune(3, 4)},
-	han.TAIL_L:  []rune{brl.Rune(2)},
-	han.TAIL_M:  []rune{brl.Rune(2, 6)},
-	han.TAIL_B:  []rune{brl.Rune(1, 2)},
-	han.TAIL_S:  []rune{brl.Rune(3)},
-	han.TAIL_SS: []rune{brl.Rune(3, 4)},
-	han.TAIL_NG: []rune{brl.Rune(2, 3, 5, 6)},
-	han.TAIL_J:  []rune{brl.Rune(1, 3)},
-	han.TAIL_C:  []rune{brl.Rune(3, 3)},
-	han.TAIL_K:  []rune{brl.Rune(2, 3, 5)},
-	han.TAIL_T:  []rune{brl.Rune(2, 3, 6)},
-	han.TAIL_P:  []rune{brl.Rune(2, 5, 6)},
-	han.TAIL_H:  []rune{brl.Rune(3, 5, 6)},
+	han.TailG:  {brl.Rune(1)},
+	han.TailN:  {brl.Rune(2, 4)},
+	han.TailD:  {brl.Rune(3, 4)},
+	han.TailL:  {brl.Rune(2)},
+	han.TailM:  {brl.Rune(2, 6)},
+	han.TailB:  {brl.Rune(1, 2)},
+	han.TailS:  {brl.Rune(3)},
+	han.TailSS: {brl.Rune(3, 4)},
+	han.TailNG: {brl.Rune(2, 3, 5, 6)},
+	han.TailJ:  {brl.Rune(1, 3)},
+	han.TailC:  {brl.Rune(3, 3)},
+	han.TailK:  {brl.Rune(2, 3, 5)},
+	han.TailT:  {brl.Rune(2, 3, 6)},
+	han.TailP:  {brl.Rune(2, 5, 6)},
+	han.TailH:  {brl.Rune(3, 5, 6)},
 
 	// 모음
-	han.MEDIAL_A:   []rune{brl.Rune(1, 2, 6)},
-	han.MEDIAL_YA:  []rune{brl.Rune(3, 4, 5)},
-	han.MEDIAL_EO:  []rune{brl.Rune(2, 3, 4)},
-	han.MEDIAL_YEO: []rune{brl.Rune(1, 5, 6)},
-	han.MEDIAL_O:   []rune{brl.Rune(1, 3, 6)},
-	han.MEDIAL_YO:  []rune{brl.Rune(3, 4, 6)},
-	han.MEDIAL_U:   []rune{brl.Rune(1, 3, 4)},
-	han.MEDIAL_YU:  []rune{brl.Rune(1, 4, 6)},
-	han.MEDIAL_EU:  []rune{brl.Rune(2, 4, 6)},
-	han.MEDIAL_I:   []rune{brl.Rune(1, 3, 5)},
-	han.MEDIAL_AE:  []rune{brl.Rune(1, 2, 3, 5)},
-	han.MEDIAL_E:   []rune{brl.Rune(1, 3, 4, 5)},
+	han.MedialA:   {brl.Rune(1, 2, 6)},
+	han.MedialYA:  {brl.Rune(3, 4, 5)},
+	han.MedialEO:  {brl.Rune(2, 3, 4)},
+	han.MedialYEO: {brl.Rune(1, 5, 6)},
+	han.MedialO:   {brl.Rune(1, 3, 6)},
+	han.MedialYO:  {brl.Rune(3, 4, 6)},
+	han.MedialU:   {brl.Rune(1, 3, 4)},
+	han.MedialYU:  {brl.Rune(1, 4, 6)},
+	han.MedialEU:  {brl.Rune(2, 4, 6)},
+	han.MedialI:   {brl.Rune(1, 3, 5)},
+	han.MedialAE:  {brl.Rune(1, 2, 3, 5)},
+	han.MedialE:   {brl.Rune(1, 3, 4, 5)},
 
 	// 이중모음
-	han.MEDIAL_YAE: []rune{brl.Rune(3, 4, 5), brl.Rune(1, 2, 3, 5)},
-	han.MEDIAL_YE:  []rune{brl.Rune(3, 4)},
-	han.MEDIAL_WA:  []rune{brl.Rune(1, 2, 3, 6)},
-	han.MEDIAL_WAE: []rune{brl.Rune(1, 2, 3, 6), brl.Rune(1, 2, 3, 5)},
-	han.MEDIAL_OE:  []rune{brl.Rune(1, 3, 4, 5, 6)},
-	han.MEDIAL_WEO: []rune{brl.Rune(1, 2, 3, 4)},
-	han.MEDIAL_WE:  []rune{brl.Rune(1, 2, 3, 4), brl.Rune(1, 2, 3, 5)},
-	han.MEDIAL_WI:  []rune{brl.Rune(1, 3, 4), brl.Rune(1, 2, 3, 5)},
-	han.MEDIAL_YI:  []rune{brl.Rune(2, 4, 5, 6)},
+	han.MedialYAE: {brl.Rune(3, 4, 5), brl.Rune(1, 2, 3, 5)},
+	han.MedialYE:  {brl.Rune(3, 4)},
+	han.MedialWA:  {brl.Rune(1, 2, 3, 6)},
+	han.MedialWAE: {brl.Rune(1, 2, 3, 6), brl.Rune(1, 2, 3, 5)},
+	han.MedialOE:  {brl.Rune(1, 3, 4, 5, 6)},
+	han.MedialWEO: {brl.Rune(1, 2, 3, 4)},
+	han.MedialWE:  {brl.Rune(1, 2, 3, 4), brl.Rune(1, 2, 3, 5)},
+	han.MedialWI:  {brl.Rune(1, 3, 4), brl.Rune(1, 2, 3, 5)},
+	han.MedialYI:  {brl.Rune(2, 4, 5, 6)},
 }
 
 var markerDoubleLead = brl.Rune(6)          // 된소리표
@@ -88,6 +89,7 @@ var markerNumber = brl.Rune(3, 4, 5, 6)     // 수표
 var markerJamo = brl.Rune(1, 2, 3, 4, 5, 6) // 말소표
 var markerForeign = brl.Rune(3, 5, 6)       // 외국어표
 
+// Jamo convert Hangul-jamo to corresponding braille
 func Jamo(r rune) (rs []rune) {
 	switch {
 	case han.IsLead(r):
@@ -104,7 +106,7 @@ func Jamo(r rune) (rs []rune) {
 			}
 		} else {
 			switch r {
-			case han.LEAD_ZS:
+			case han.LeadZS:
 				// lead consonant can be omitted when it's ZS.
 			default:
 				log.Printf("No braille code for lead, %c\n",
@@ -151,29 +153,29 @@ func Jamo(r rune) (rs []rune) {
 
 // 기타, 문장부호
 var symbol = map[rune][]rune{
-	'.': []rune{brl.Rune(2, 5, 6)},
-	',': []rune{brl.Rune(5)},
-	':': []rune{brl.Rune(5), brl.Rune(2)},
-	';': []rune{brl.Rune(5, 6), brl.Rune(2, 3)},
-	'?': []rune{brl.Rune(2, 3, 6)},
-	'!': []rune{brl.Rune(4, 5, 6)},
-	'…': []rune{brl.Rune(5), brl.Rune(5), brl.Rune(5)},
-	'‘': []rune{brl.Rune(1, 2, 6)},
-	'’': []rune{brl.Rune(3, 5, 6)},
-	'“': []rune{brl.Rune(6), brl.Rune(2, 3, 6)},
-	'”': []rune{brl.Rune(3, 5, 6), brl.Rune(3)},
-	'(': []rune{brl.Rune(3, 6)},
-	')': []rune{brl.Rune(3, 6)},
-	'{': []rune{brl.Rune(2, 3, 6), brl.Rune(2, 3)},
-	'}': []rune{brl.Rune(5, 6), brl.Rune(3, 5, 6)},
-	'[': []rune{brl.Rune(2, 3, 6), brl.Rune(3)},
-	']': []rune{brl.Rune(6), brl.Rune(3, 5, 6)},
-	'-': []rune{brl.Rune(3, 6)},
-	'~': []rune{brl.Rune(3, 6), brl.Rune(3, 6)},
-	'_': []rune{brl.Rune(6), brl.Rune(3, 6), brl.Rune(3, 6), brl.Rune(3)},
-	'/': []rune{brl.Rune(4, 5, 6), brl.Rune(3, 4)},
-	'※': []rune{brl.Rune(3, 5), brl.Rune(3, 5)},
-	'—': []rune{brl.Rune(5, 6), brl.Rune(3, 6), brl.Rune(3, 6), brl.Rune(2, 3)}, // 줄표
+	'.': {brl.Rune(2, 5, 6)},
+	',': {brl.Rune(5)},
+	':': {brl.Rune(5), brl.Rune(2)},
+	';': {brl.Rune(5, 6), brl.Rune(2, 3)},
+	'?': {brl.Rune(2, 3, 6)},
+	'!': {brl.Rune(4, 5, 6)},
+	'…': {brl.Rune(5), brl.Rune(5), brl.Rune(5)},
+	'‘': {brl.Rune(1, 2, 6)},
+	'’': {brl.Rune(3, 5, 6)},
+	'“': {brl.Rune(6), brl.Rune(2, 3, 6)},
+	'”': {brl.Rune(3, 5, 6), brl.Rune(3)},
+	'(': {brl.Rune(3, 6)},
+	')': {brl.Rune(3, 6)},
+	'{': {brl.Rune(2, 3, 6), brl.Rune(2, 3)},
+	'}': {brl.Rune(5, 6), brl.Rune(3, 5, 6)},
+	'[': {brl.Rune(2, 3, 6), brl.Rune(3)},
+	']': {brl.Rune(6), brl.Rune(3, 5, 6)},
+	'-': {brl.Rune(3, 6)},
+	'~': {brl.Rune(3, 6), brl.Rune(3, 6)},
+	'_': {brl.Rune(6), brl.Rune(3, 6), brl.Rune(3, 6), brl.Rune(3)},
+	'/': {brl.Rune(4, 5, 6), brl.Rune(3, 4)},
+	'※': {brl.Rune(3, 5), brl.Rune(3, 5)},
+	'—': {brl.Rune(5, 6), brl.Rune(3, 6), brl.Rune(3, 6), brl.Rune(2, 3)}, // 줄표
 	// TODO: 빠진 문장 부호 있음.
 }
 
@@ -190,32 +192,32 @@ func isSupportedSymbol(c rune) bool {
 (까 = ㄱ + 가, 말 = 마 + ㄹ 등)
 */
 var abbr = map[rune][]rune{
-	'가': []rune{brl.Rune(1, 2, 4, 6)},
-	'나': []rune{brl.Rune(1, 4)},
-	'다': []rune{brl.Rune(2, 4)},
-	'마': []rune{brl.Rune(1, 5)},
-	'바': []rune{brl.Rune(4, 5)},
-	'사': []rune{brl.Rune(1, 2, 3)},
-	'자': []rune{brl.Rune(4, 6)},
-	'카': []rune{brl.Rune(1, 2, 4)},
-	'타': []rune{brl.Rune(1, 2, 5)},
-	'파': []rune{brl.Rune(1, 4, 5)},
-	'하': []rune{brl.Rune(2, 4, 5)},
-	'것': []rune{brl.Rune(4, 5, 6), brl.Rune(2, 3, 4)},
-	'억': []rune{brl.Rune(1, 4, 5, 6)},
-	'언': []rune{brl.Rune(2, 3, 4, 5, 6)},
-	'얼': []rune{brl.Rune(2, 3, 4, 5)},
-	'연': []rune{brl.Rune(1, 6)},
-	'열': []rune{brl.Rune(1, 2, 5, 6)},
-	'엉': []rune{brl.Rune(1, 2, 4, 5, 6)},
-	'영': []rune{brl.Rune(1, 2, 4, 5, 6)},
-	'옥': []rune{brl.Rune(1, 3, 4, 6)},
-	'온': []rune{brl.Rune(1, 2, 3, 5, 6)},
-	'옹': []rune{brl.Rune(1, 2, 3, 4, 5, 6)},
-	'운': []rune{brl.Rune(1, 2, 4, 5)},
-	'울': []rune{brl.Rune(1, 2, 3, 4, 6)},
-	'은': []rune{brl.Rune(1, 3, 5, 6)},
-	'을': []rune{brl.Rune(2, 3, 4, 6)},
+	'가': {brl.Rune(1, 2, 4, 6)},
+	'나': {brl.Rune(1, 4)},
+	'다': {brl.Rune(2, 4)},
+	'마': {brl.Rune(1, 5)},
+	'바': {brl.Rune(4, 5)},
+	'사': {brl.Rune(1, 2, 3)},
+	'자': {brl.Rune(4, 6)},
+	'카': {brl.Rune(1, 2, 4)},
+	'타': {brl.Rune(1, 2, 5)},
+	'파': {brl.Rune(1, 4, 5)},
+	'하': {brl.Rune(2, 4, 5)},
+	'것': {brl.Rune(4, 5, 6), brl.Rune(2, 3, 4)},
+	'억': {brl.Rune(1, 4, 5, 6)},
+	'언': {brl.Rune(2, 3, 4, 5, 6)},
+	'얼': {brl.Rune(2, 3, 4, 5)},
+	'연': {brl.Rune(1, 6)},
+	'열': {brl.Rune(1, 2, 5, 6)},
+	'엉': {brl.Rune(1, 2, 4, 5, 6)},
+	'영': {brl.Rune(1, 2, 4, 5, 6)},
+	'옥': {brl.Rune(1, 3, 4, 6)},
+	'온': {brl.Rune(1, 2, 3, 5, 6)},
+	'옹': {brl.Rune(1, 2, 3, 4, 5, 6)},
+	'운': {brl.Rune(1, 2, 4, 5)},
+	'울': {brl.Rune(1, 2, 3, 4, 6)},
+	'은': {brl.Rune(1, 3, 5, 6)},
+	'을': {brl.Rune(2, 3, 4, 6)},
 
 	// TODO: 약어(예, 그래서) 빠짐
 }
@@ -232,6 +234,7 @@ func hasHangul(s string) bool {
 	return false
 }
 
+// Encode encodes Hangul string to braille
 func Encode(s string) (string, int) {
 	needForeignMarker := hasHangul(s)
 
